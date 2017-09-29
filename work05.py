@@ -1,6 +1,7 @@
 from flask import Flask, render_template, Markup
-import random
+from utils import occupation
 import csv
+
 
 myApp = Flask(__name__)
 
@@ -11,9 +12,9 @@ def root():
 
 @myApp.route('/occupations')
 def occupations():
-    return render_template('occupations.html',table = makeTable(), jobs = Markup("<h1>List of jobs</h1>"), randomJob = Markup("<p> Random Job: " + pick() + "</p>"))
+    return render_template('occupations.html',table = makeTable(), jobs = Markup("<h1>List of jobs</h1>"), randomJob = Markup("<p> Random Job: " + occupation.pick() + "</p>"))
 
-def pick():
+'''def pick():
     #read file
     file = csv.reader(open('occupations.csv','rU'))
     occupations = []
@@ -26,10 +27,10 @@ def pick():
             occupations.append(row[0])
     #pick occupation
     num = random.randint(0,len(occupations) - 1)
-    return occupations[num]
+    return occupations[num]'''
 
 def makeTable():
-    file = csv.reader(open('occupations.csv','rU'))
+    file = csv.reader(open('data/occupations.csv','rU'))
     output = '<table border="1">'
     for row in file:
         output += '<tr><td>' + row[0] + '</td> <td>' + row[1] +' </td>'
